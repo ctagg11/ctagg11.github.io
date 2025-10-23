@@ -1,15 +1,15 @@
 // ===============================================
-// Mobile Navigation Toggle
+// Mobile Sidebar Toggle
 // ===============================================
 const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+const sidebar = document.querySelector('.sidebar');
 
 hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+    sidebar.classList.toggle('active');
     
     // Animate hamburger
     const spans = hamburger.querySelectorAll('span');
-    if (navMenu.classList.contains('active')) {
+    if (sidebar.classList.contains('active')) {
         spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
         spans[1].style.opacity = '0';
         spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
@@ -20,15 +20,28 @@ hamburger.addEventListener('click', () => {
     }
 });
 
-// Close mobile menu when clicking on a link
+// Close mobile sidebar when clicking on a link
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        sidebar.classList.remove('active');
         const spans = hamburger.querySelectorAll('span');
         spans[0].style.transform = 'none';
         spans[1].style.opacity = '1';
         spans[2].style.transform = 'none';
     });
+});
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+            sidebar.classList.remove('active');
+            const spans = hamburger.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
+    }
 });
 
 // ===============================================
@@ -51,21 +64,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ===============================================
-// Navbar Background on Scroll
+// Scroll Effects (removed navbar shadow since we have sidebar now)
 // ===============================================
-const navbar = document.querySelector('.navbar');
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
-    // Add shadow when scrolled
-    if (currentScroll > 100) {
-        navbar.style.boxShadow = 'var(--shadow-md)';
-    } else {
-        navbar.style.boxShadow = 'var(--shadow-sm)';
-    }
-    
     lastScroll = currentScroll;
 });
 
@@ -85,8 +89,8 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe all project cards and skill categories
-document.querySelectorAll('.project-card, .skill-category, .contact-item').forEach(el => {
+// Observe all project cards and contact items
+document.querySelectorAll('.project-card, .contact-item').forEach(el => {
     el.classList.add('fade-in');
     observer.observe(el);
 });
@@ -246,7 +250,7 @@ if ('IntersectionObserver' in window) {
 // ===============================================
 // Console Message (Fun Easter Egg)
 // ===============================================
-console.log('%c👋 Hello, fellow developer!', 'color: #2563eb; font-size: 20px; font-weight: bold;');
-console.log('%cInterested in the code? Check out the repository!', 'color: #64748b; font-size: 14px;');
-console.log('%chttps://github.com/ctagg11', 'color: #2563eb; font-size: 14px;');
+console.log('%c👋 Hello, fellow developer!', 'color: #1a1a1a; font-size: 20px; font-weight: bold;');
+console.log('%cInterested in the code? Check out the repository!', 'color: #666; font-size: 14px;');
+console.log('%chttps://github.com/ctagg11', 'color: #1a1a1a; font-size: 14px;');
 
