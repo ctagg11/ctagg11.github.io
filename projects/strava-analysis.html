@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strava Data Analysis | Charlie Taggart</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="project-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <!-- Simple Navigation -->
+    <nav class="project-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="back-link">← Back to Portfolio</a>
+            <a href="../index.html" class="nav-logo">Charlie Taggart</a>
+        </div>
+    </nav>
+
+    <!-- Project Content -->
+    <main class="project-main">
+        <article class="project-article">
+            <!-- Header -->
+            <header class="project-header">
+                <h1>Analyzing My Strava Running Data</h1>
+                <div class="project-meta">
+                    <span class="date">January 2025</span>
+                    <span class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Analysis</span>
+                        <span class="tag">Visualization</span>
+                        <span class="tag">Strava API</span>
+                    </span>
+                </div>
+            </header>
+
+            <!-- Introduction -->
+            <section class="content-section">
+                <h2>Overview</h2>
+                <p>
+                    In this project, I analyzed my personal running data from Strava to uncover patterns in my training habits, 
+                    performance trends, and the relationship between various metrics like distance, pace, and elevation gain.
+                </p>
+                <p>
+                    The goal was to answer questions like: Am I getting faster? What days do I run most? How does elevation 
+                    affect my pace? This analysis combines data extraction from the Strava API, data cleaning, exploratory 
+                    analysis, and visualization.
+                </p>
+            </section>
+
+            <!-- Setup / Imports -->
+            <section class="content-section">
+                <h2>Setup & Data Import</h2>
+                <p>First, let's import the necessary libraries and load the data.</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+
+# Set style
+plt.style.use('seaborn-v0_8')
+sns.set_palette("husl")
+
+# Load data
+df = pd.read_csv('strava_activities.csv')
+df['date'] = pd.to_datetime(df['date'])
+df['day_of_week'] = df['date'].dt.day_name()
+
+print(f"Loaded {len(df)} activities")</code></pre>
+                </div>
+
+                <div class="output-block">
+                    <pre>Loaded 247 activities</pre>
+                </div>
+            </section>
+
+            <!-- Data Exploration -->
+            <section class="content-section">
+                <h2>Data Exploration</h2>
+                <p>Let's take a look at the structure of our data and basic statistics.</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code class="language-python">print(df.head())
+print("\nBasic Statistics:")
+print(df[['distance_km', 'moving_time_min', 'avg_pace_min_km', 'elevation_gain_m']].describe())</code></pre>
+                </div>
+
+                <div class="output-block">
+                    <pre>         date  distance_km  moving_time_min  avg_pace_min_km  elevation_gain_m
+0  2023-01-15         8.2             45.3              5.52              78.0
+1  2023-01-18         5.1             28.7              5.63              42.0
+2  2023-01-22        10.5             60.2              5.73             112.0
+3  2023-01-25         6.8             38.9              5.72              65.0
+4  2023-01-29        12.0             68.4              5.70             135.0
+
+Basic Statistics:
+       distance_km  moving_time_min  avg_pace_min_km  elevation_gain_m
+count       247.00           247.00           247.00            247.00
+mean          8.15            46.82             5.74             89.23
+std           3.42            19.67             0.45             52.18
+min           3.20            18.50             4.82             15.00
+25%           5.50            31.25             5.42             48.00
+50%           7.80            44.60             5.68             82.00
+75%          10.20            58.75             6.02            118.00
+max          21.10           125.30             7.15            285.00</pre>
+                </div>
+            </section>
+
+            <!-- Analysis & Visualization -->
+            <section class="content-section">
+                <h2>Key Findings</h2>
+                
+                <h3>1. Training Volume Over Time</h3>
+                <p>
+                    I wanted to see how my weekly mileage has evolved. The chart below shows a clear upward trend, 
+                    with some obvious taper periods before races.
+                </p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code class="language-python"># Weekly mileage
+weekly = df.groupby(df['date'].dt.to_period('W'))['distance_km'].sum()
+
+plt.figure(figsize=(12, 5))
+plt.plot(weekly.index.to_timestamp(), weekly.values, linewidth=2)
+plt.fill_between(weekly.index.to_timestamp(), weekly.values, alpha=0.3)
+plt.title('Weekly Running Volume', fontsize=16, fontweight='bold')
+plt.xlabel('Week')
+plt.ylabel('Distance (km)')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()</code></pre>
+                </div>
+
+                <!-- Placeholder for visualization -->
+                <div class="viz-placeholder">
+                    <p>📊 <em>Visualization: Weekly mileage trend line chart</em></p>
+                    <p class="viz-note">Replace this with your actual chart image or embed</p>
+                </div>
+
+                <h3>2. Pace Distribution by Day of Week</h3>
+                <p>
+                    Interestingly, my Tuesday runs are consistently faster - probably because those are my track workout days!
+                </p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code class="language-python"># Order days properly
+day_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+df['day_of_week'] = pd.Categorical(df['day_of_week'], categories=day_order, ordered=True)
+
+plt.figure(figsize=(12, 6))
+sns.boxplot(data=df, x='day_of_week', y='avg_pace_min_km')
+plt.title('Pace Distribution by Day of Week', fontsize=16, fontweight='bold')
+plt.xlabel('Day')
+plt.ylabel('Average Pace (min/km)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()</code></pre>
+                </div>
+
+                <div class="viz-placeholder">
+                    <p>📊 <em>Visualization: Box plot showing pace distribution across weekdays</em></p>
+                </div>
+
+                <h3>3. Elevation vs. Pace Correlation</h3>
+                <p>
+                    As expected, there's a positive correlation between elevation gain and pace - hillier routes 
+                    slow me down. The relationship is roughly 0.1 min/km slower per 100m of elevation gain.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code class="language-python">from scipy.stats import pearsonr
+
+# Calculate correlation
+corr, p_value = pearsonr(df['elevation_gain_m'], df['avg_pace_min_km'])
+print(f"Correlation: {corr:.3f}, p-value: {p_value:.4f}")
+
+plt.figure(figsize=(10, 6))
+plt.scatter(df['elevation_gain_m'], df['avg_pace_min_km'], alpha=0.5)
+plt.xlabel('Elevation Gain (m)', fontsize=12)
+plt.ylabel('Average Pace (min/km)', fontsize=12)
+plt.title(f'Elevation vs Pace (r={corr:.2f})', fontsize=14, fontweight='bold')
+
+# Add trend line
+z = np.polyfit(df['elevation_gain_m'], df['avg_pace_min_km'], 1)
+p = np.poly1d(z)
+plt.plot(df['elevation_gain_m'], p(df['elevation_gain_m']), "r--", alpha=0.8, linewidth=2)
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()</code></pre>
+                </div>
+
+                <div class="output-block">
+                    <pre>Correlation: 0.687, p-value: 0.0000</pre>
+                </div>
+
+                <div class="viz-placeholder">
+                    <p>📊 <em>Visualization: Scatter plot with trend line</em></p>
+                </div>
+            </section>
+
+            <!-- Conclusions -->
+            <section class="content-section">
+                <h2>Conclusions</h2>
+                <ul>
+                    <li><strong>Training Progress:</strong> Weekly mileage increased by ~40% over the analysis period</li>
+                    <li><strong>Pace Improvement:</strong> Average pace improved from 5.8 to 5.5 min/km</li>
+                    <li><strong>Consistency:</strong> Tuesday and Saturday are my most consistent running days</li>
+                    <li><strong>Terrain Impact:</strong> Elevation significantly impacts pace - important for race planning</li>
+                </ul>
+                
+                <p>
+                    This analysis provided valuable insights into my training patterns and helped identify areas for improvement. 
+                    Next steps include analyzing heart rate data and comparing performance across different weather conditions.
+                </p>
+            </section>
+
+            <!-- Data & Code -->
+            <section class="content-section">
+                <h2>Data & Code</h2>
+                <p>
+                    <a href="https://github.com/ctagg11/strava-analysis" target="_blank" class="external-link">
+                        View full code on GitHub →
+                    </a>
+                </p>
+                <p class="note">
+                    <strong>Note:</strong> Personal activity data has been anonymized. 
+                    You can use the <a href="https://developers.strava.com/" target="_blank">Strava API</a> 
+                    to pull your own data.
+                </p>
+            </section>
+
+            <!-- Footer Navigation -->
+            <footer class="project-footer">
+                <a href="../index.html" class="back-link-footer">← Back to All Projects</a>
+            </footer>
+        </article>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('code');
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

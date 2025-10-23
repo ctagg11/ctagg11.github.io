@@ -1,0 +1,344 @@
+/* ===============================================
+   Project Page Specific Styles
+   =============================================== */
+
+/* Navigation for project pages */
+.project-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.project-nav .nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-link {
+    color: #2563eb;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: #1e40af;
+    transform: translateX(-3px);
+}
+
+.project-nav .nav-logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Main content */
+.project-main {
+    margin-top: 80px;
+    padding: 3rem 0 4rem;
+    background-color: #ffffff;
+}
+
+.project-article {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+.project-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.project-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.project-meta .date {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.project-meta .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.project-meta .tag {
+    padding: 0.375rem 0.75rem;
+    background-color: #f1f5f9;
+    color: #2563eb;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Content sections */
+.content-section {
+    margin-bottom: 3rem;
+}
+
+.content-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+}
+
+.content-section h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+}
+
+.content-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #475569;
+    margin-bottom: 1.25rem;
+}
+
+.content-section ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.content-section li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #475569;
+    margin-bottom: 0.75rem;
+    list-style: disc;
+}
+
+.content-section li strong {
+    color: #1e293b;
+}
+
+/* Code blocks */
+.code-block {
+    background-color: #1e293b;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: #0f172a;
+    border-bottom: 1px solid #334155;
+}
+
+.code-language {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.copy-btn {
+    background-color: #334155;
+    color: #e2e8f0;
+    border: none;
+    padding: 0.375rem 0.875rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.copy-btn:hover {
+    background-color: #475569;
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 1.25rem;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Output blocks */
+.output-block {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+.output-block pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.6;
+}
+
+/* Visualization placeholders */
+.viz-placeholder {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.viz-placeholder p {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.viz-placeholder .viz-note {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Notes and callouts */
+.note {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: #1e40af;
+}
+
+.note strong {
+    color: #1e40af;
+}
+
+/* Links */
+.external-link {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: rgba(37, 99, 235, 0.3);
+    text-underline-offset: 3px;
+    transition: all 0.2s ease;
+}
+
+.external-link:hover {
+    color: #1e40af;
+    text-decoration-color: #1e40af;
+}
+
+.note a {
+    color: #1e40af;
+    text-decoration: underline;
+}
+
+/* Footer */
+.project-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+    text-align: center;
+}
+
+.back-link-footer {
+    display: inline-block;
+    color: #2563eb;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.back-link-footer:hover {
+    color: #1e40af;
+    transform: translateX(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .project-header h1 {
+        font-size: 2rem;
+    }
+
+    .project-article {
+        padding: 0 1.5rem;
+    }
+
+    .content-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .content-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .content-section p,
+    .content-section li {
+        font-size: 1rem;
+    }
+
+    .code-block code {
+        font-size: 0.85rem;
+    }
+
+    .project-nav .nav-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .project-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .code-block code {
+        font-size: 0.8rem;
+    }
+
+    .viz-placeholder {
+        padding: 2rem 1rem;
+    }
+}
+
